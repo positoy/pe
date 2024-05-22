@@ -24,7 +24,6 @@ class PriceCheckWorker(context: Context, params: WorkerParameters) : Worker(cont
     val executor = TradeExecutor()
 
     override fun doWork(): Result {
-        Log.i(TAG, "PriceCheckWorker: starting");
         scheduleNextWork(applicationContext)
         try {
             val bithumbPrice = bithumb.checkPrice(Ticker.ETH);
@@ -59,13 +58,16 @@ class PriceCheckWorker(context: Context, params: WorkerParameters) : Worker(cont
     }
 
     companion object {
+        var duration: Long = 10
+
         @JvmStatic
         fun scheduleNextWork(context: Context) {
             WorkManager.getInstance(context).enqueue(
                 OneTimeWorkRequest
                     .Builder(PriceCheckWorker::class.java)
-                    .setInitialDelay(10, TimeUnit.SECONDS)
-                    .build())
+                    .setInitialDelay(duration, TimeUnit.SECONDS)
+                    .build()
+            )
         }
     }
 }
