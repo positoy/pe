@@ -1,18 +1,14 @@
 "use client";
 import { useState } from "react";
 import Head from "next/head";
-import axios from "axios";
 
 type ProficiencyType = "beginner" | "intermediate" | "advanced" | "expert";
 
 export default function Home() {
   const [occupation, setOccupation] = useState("");
   const [proficiency, setProficiency] = useState<ProficiencyType>("beginner");
-  const [response, setResponse] = useState("");
 
-  return response ? (
-    <div>{JSON.stringify(response)}</div>
-  ) : (
+  return (
     <div>
       <Head>
         <title>Job and English Skill Form</title>
@@ -29,11 +25,7 @@ export default function Home() {
             className="space-y-4"
             onSubmit={(e) => {
               e.preventDefault();
-              axios
-                .get(
-                  `/api/ai/sentences?occupation=${occupation}&proficiency=${proficiency}`
-                )
-                .then((response) => setResponse(response.data));
+              location.href = `/learn/${occupation}/${proficiency}`;
             }}
           >
             <div>
