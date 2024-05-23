@@ -11,11 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import io.github.positoy.eth.ui.theme.EthTheme
-import java.util.concurrent.TimeUnit
+import io.github.positoy.eth.worker.PriceCheckWorker
 
 
 class MainActivity : ComponentActivity() {

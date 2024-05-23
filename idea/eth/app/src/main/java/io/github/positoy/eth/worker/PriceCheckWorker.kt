@@ -1,4 +1,4 @@
-package io.github.positoy.eth;
+package io.github.positoy.eth.worker;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +7,8 @@ import androidx.work.WorkManager
 
 import androidx.work.Worker
 import androidx.work.WorkerParameters;
+import io.github.positoy.eth.currency.Currency
+import io.github.positoy.eth.currency.CurrencyExchange
 
 import io.github.positoy.eth.exchange.Ticker;
 import io.github.positoy.eth.exchange.binance.Binance;
@@ -21,13 +23,18 @@ class PriceCheckWorker(context: Context, params: WorkerParameters) : Worker(cont
 
     val bithumb = Bithumb()
     val binance = Binance()
+    val currencyExecutor = CurrencyExchange()
     val executor = TradeExecutor()
 
     override fun doWork(): Result {
         scheduleNextWork(applicationContext)
         try {
             val bithumbPrice = bithumb.checkPrice(Ticker.ETH);
-            val binancePrice = binance.checkPrice(Ticker.ETH);
+            val binancePrice = currencyExecutor.convert(
+                binance.checkPrice(Ticker.ETH),
+                Currency.USD,
+                Currency.KRW
+            );
             val priceDifference = bithumbPrice - binancePrice;
 
             Log.i(TAG, "Bithumb ETH Price: " + bithumbPrice);
