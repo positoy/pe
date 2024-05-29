@@ -21,6 +21,7 @@ const queryEnglishSentences = async (
         content: JSON.stringify({ occupation, proficiency }),
       },
     ],
+    response_format: { type: "json_object" },
     model: OPENAI_MODEL,
     max_tokens: OPENAI_MAX_TOKENS,
   });

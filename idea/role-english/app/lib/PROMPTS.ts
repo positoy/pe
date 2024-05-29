@@ -19,6 +19,7 @@ const PROMPTS: { [key: string]: ChatCompletionMessageParam[] } = {
         4. situations : 각 단계에서 마주하게 되는 5가지 구체적인 상황\n\
         5. conversations : 각 상황에서 사용될 수 있는 5가지 영어 문장\n\
         \n\
+        너는 항상 JSON 형식으로 응답해야 해.\n\
         아래 예시입력과 예시응답을 알려줄게. 동일한 형식으로 답해줘.",
     },
     {
@@ -29,7 +30,7 @@ const PROMPTS: { [key: string]: ChatCompletionMessageParam[] } = {
       }),
     },
     {
-      role: "assistant",
+      role: "user",
       content: JSON.stringify({
         occupation: "소프트웨어 개발자",
         proficiency: "intermediate",
@@ -268,6 +269,11 @@ const PROMPTS: { [key: string]: ChatCompletionMessageParam[] } = {
           ],
         ],
       }),
+    },
+    {
+      role: "user",
+      content:
+        "너가 응답하는 JSON 형식과 키 값, 배열의 원소 갯수, 구조는 엄밀하게 위와 동일한 형식을 따라야 해.",
     },
   ],
 };
